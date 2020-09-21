@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">     
+
+        <link rel="stylesheet" href="style.css">
+
+        <link rel="shortout icon" href="#" type="image/x-png"> 
+		<title>Formulário</title>
+    </head>
+    <body>        
+        <div class="header">            
+            <h4>Preencha seus dados</h4>
+        </div>
+
+        <div class="corpo">   
+            <form class="" method="post" action="#">                
+                <!-- dados pessoas -->
+                <div class="espaco">                    
+                    <h2>Seus dados</h2>
+                    <div class="form-row">                        
+                        <div class="form-group col-md-6">
+                            <label for="nome">Nome <span> * </span></label>
+                            <input type="text" class="form-control" id="inputName" name="nome" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="email">E-mail <span> * </span></label>
+                            <input type="email" class="form-control" id="email" name="email" required>                   
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="cpf">CPF <span> * </span></label>
+                            <input type="text" class="form-control cpf" id="inputCPF" name="cpf" maxlength="14" placeholder="000.000.000-00" required>
+                            <div class="erro erroCPF" id="erroCPF"></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="celular">Celular/ Whatsapp <span> * </span></label>
+                            <input type="text" class="form-control" id="inputCelular" name="celular" maxlength="16" placeholder="(00) 0 0000-0000" required>
+                        </div>                            
+                    </div>                    
+                </div>
+                <hr>
+                <div class="espaco">                   
+                    <h2>Dados do tênis</h2>
+                    <div class="form-row">                        
+                        <div class="form-group col-md-6">
+                            <label for="nome">Escolha o número do tênis <span> * </span></label>
+                            <select name="numero" class="form-control" required>
+                                <option value="35">35</option> 
+                                <option value="36" selected>36</option>
+                                <option value="37">37</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="email">Escolha a cor do tênis<span> * </span></label>
+                            <input type="color" class="form-control" id="cor" name="cor" required>                   
+                        </div>                          
+                    </div>
+                </div>
+                <hr>
+                <!-- endereço -->
+                <div class="espaco">
+                    <h2>Endereço de cobrança</h2>                    
+                    <div class="form-row">  
+                        <div class="form-group col-md-5">
+                            <label for="cep">CEP <span> * </span></label>
+                            <input type="text" class="form-control" maxlength="9" minlength="9" name="cep" id="cep" placeholder="000000-000" required>
+                        </div> 
+                    </div>
+                    <div class="form-row">  
+                        <div class="form-group col-md-7">
+                            <label for="rua">Rua <span> * </span></label>
+                            <input type="text" class="form-control" id="inputRua" name="rua" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="numero">Número <span> * </span></label>
+                            <input type="number" class="form-control" id="inputNumero" name="numero" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="complemento">Complemento</label>
+                            <input type="text" class="form-control" id="complemento" name="complemento" maxlength="40">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="bairro">Bairro <span> * </span></label>
+                            <input type="text" class="form-control" id="inputBairro" name="bairro" required>
+                        </div>                        
+                        <div class="form-group col-md-5">
+                            <label for="cidade">Cidade <span> * </span></label>
+                            <input type="text" class="form-control" id="inputCidade" name="cidade" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="estado">Estado <span> * </span></label>
+                            <input type="text" class="form-control" id="inputEstado" name="estado" placeholder='XX' maxlength="2" required>
+                        </div>
+                    </div>
+                </div>      
+                <hr>      
+                <!-- dados do cartao -->
+                <div class="espaco cartao">
+                    <h2>Cartão de crédito</h2>   
+                    <p>Fique tranquilo, seus dados estarão seguros.</p>                 
+                    <div class="form-row dadosCartao">  
+                        <div class="form-group col-md-6">
+                            <label for="numeroCartao">Número do cartão <span> * </span></label>
+                            <input type="number" class="form-control" id="inputCartao" name="numeroCartao" minlength="12" maxlength="19" onblur="testaCartao();" required>
+                            <div class="erro" id="erroCartao"></div>
+                        </div> 
+                        <div class="form-group col-md-3">
+                            <label for="validade">Validade <span> * </span></label>
+                            <input type="date" class="form-control" id="validade" name="validade" minlength="5" maxlength="5" placeholder="MM/AA" onfocus="trocaBorda(3);" onblur="testaValidade();" onkeypress="mascaraValidade(this);" name="validadeCartao" required>
+                            <div class="erro" id="erroData"></div>
+                        </div> 
+                        <div class="form-group col-md-3">
+                            <label for="codigoSeguranca">Cód. de segurança <span> * </span></label>
+                            <input type="number" class="form-control" id="inputCodigo" name="codigoSeguranca" minlength="2" maxlength="4" required>
+                        </div>   
+                    </div>
+                </div>
+
+                <div class="botao">
+                    <input id="botao" type="submit" class="btn btn-primary" name="entrar" value="Enviar"/>
+                </div>
+            </form>               
+        </div>   
+    </body>
+</html>
