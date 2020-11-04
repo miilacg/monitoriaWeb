@@ -1,0 +1,108 @@
+html, body{
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body{
+    font-family: arial;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(232, 231, 229);
+}
+
+/*tiras as setinhas dos inputs*/
+input[type=number]::-webkit-inner-spin-button { 
+    -webkit-appearance: none;    
+}
+
+input[type=number] { 
+   -moz-appearance: textfield;
+   appearance: textfield;
+}
+
+/*header*/
+.header{
+    height: auto;
+    width: 100%;
+    position: -webkit-sticky; 
+    position: sticky;
+    z-index: 9;
+    top: 0;
+    background-color:  rgb(75, 75, 77);
+    padding: 0.8vw 1vw;
+}
+
+h4{
+    font-size: 1.75rem;
+    color: white;
+    text-align: center;
+    margin: 0px;
+}
+
+/*corpo*/
+.corpo.row{
+    padding: 5vw 8vw;
+}
+
+h2{
+    font-size: 1.6rem;
+    margin: 0px 0px 2rem 0px;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0.25rem;
+}
+
+/*Opcoes*/
+/*.opcao{
+    padding: 1vw;
+    margin: 1vw 0vw;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+.opcao img{
+    width: 100%;
+}
+
+.opcao .texto{
+    padding: 1vw 1px 0vw 1px;
+    color: rgb(36, 36, 36);
+}
+
+h5{
+    margin-bottom: .9rem;
+}*/
+
+h4, h6{
+   margin: 0px;
+}
+
+h6{
+    font-weight: lighter;
+}
+
+span{
+    color: rgb(205, 30, 37);
+}
+
+hr{
+    margin: 5px 0px 20px 0px;
+}
+
+.botao{
+    margin: 10px auto 0px auto;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.btn {
+    padding: 3px 90px;
+    font-size: 30px;
+}
