@@ -1,0 +1,142 @@
+
+<!--Você deverá criar uma página HTML com o título “Prova WEB”.
+No corpo do html deverá ter um título (h1) “Cadastro” e subtítulo (h2) “Informações Pessoais”.
+Abaixo deverá existir um formulário método Post e enviando para a página recebe.php (que não precisa existir).
+Os campos do formulário são: Nome Usuário, e-mail, senha, confirma senha, sexo, botão enviar
+A página deverá ser formatada com css utilizando os seguintes recursos:
+Colocar o background com uma cor a sua escolha;
+Formatar o título pelo ID (formatação livre);
+Formatar o subtítulo por classe (formatação livre);
+Formatar os textos do formulário com tamanho 13 buscando pela tag parágrafo (p).
+Fazer as seguintes validações e adaptações. Fique a vontade para buscar elementos por id, nome, seletores, etc.
+O campo nome usuário deverá ser colocado em maiúsculo assim que o usuário sair do campo.
+Quando o usuário deixar o campo nome Usuário também deverá verificar se tem pelo menos 3 caracteres. Caso 
+esteja correto o campo deverá ficar verde, caso não, deverá aparecer uma mensagem na frente do campo.
+O campo e-mail é obrigatório.
+A senha não pode começar com @.
+O campo confirmar senha deve coincidir com senha (isso será verificado quando o formulário for
+submetido).
+O campo sexo deve ser selecionado clicando também nos nomes e não apenas nas bolinhas.
+Caso marque masculino, deverá aparecer abaixo um campo texto “Número alistamento”.
+Ao clicar em enviar, caso as senhas não estejam iguais, deverá aparecer um alert e o formulário não
+será submetido.-->
+
+<script>
+    function validarnome() {
+        var nome = document.getElementById("nome");
+        if(nome.value.length >= 3){
+            document.getElementById("nome").value = nome.value.toUpperCase();
+            nome.setAttribute('style', 'box-shadow: 0 0 0 0.2rem rgba(34, 177, 76,.5);');
+        }else{
+            nome.setAttribute('style', 'box-shadow: 0 0 0 0.2rem rgba(255, 0, 0,.25);');
+            document.getElementById('nome').value = "";
+            erroNaoAtende.setAttribute('style', 'display: block;');
+        }
+    }
+
+    function validarSenha() {
+        var senha = document.getElementById("senha");
+        let special = /[@]/;
+        if(special.test(senha.value[0])){
+            nome.setAttribute('style', 'box-shadow: 0 0 0 0.2rem rgba(255, 0, 0,.25);');
+            document.getElementById('senha').value = "";
+            erroSenha.setAttribute('style', 'display: block;');
+        }
+    }
+
+    /*confere se a senha inserida é igual a senha de validação*/
+    function comparaSenha(){
+        var senha = document.getElementById('senha').value;
+        var senhaConfirma = document.getElementById('senhaConfirma');   
+
+        if (senha === senhaConfirma.value){
+            senhaConfirma.setCustomValidity('');
+            senhaConfirma.setAttribute('style', 'box-shadow:focus: 0 0 0 0.2rem rgba(0,123,255,.25);');
+        }else{
+            document.getElementById('senhaConfirma').value = "";
+            senhaConfirma.setAttribute('style', 'box-shadow: 0 0 0 0.2rem rgba(255, 0, 0,.25);');
+            senhaDiferente.setAttribute('style', 'display: block;');
+        }
+    }
+
+    function alistamento(){  
+        var sexo = document.getElementById('sexo').value;
+
+        if(sexo === 'Masculino'){
+            var alistamento = document.getElementById('alistamento');
+            var inputAlistamento = document.createElement('input');
+            inputAlistamento.setAttribute('class', 'form-control'); 
+            inputAlistamento.setAttribute('type', 'number');  
+            inputAlistamento.setAttribute('id', 'numAlistamento');
+            inputAlistamento.setAttribute('name', 'NnumAlistamento'); 
+            inputAlistamento.setAttribute('placeholder', 'Digite o número do seu alistamento');
+            alistamento.append(inputAlistamento); 
+        }         
+    }
+</script>
+
+<!DOCTYPE HTML>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">     
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="shortout icon" href="#" type="image/x-png"> 
+		<title>Prova WEB</title>
+    </head>
+    <body>        
+        <div class="header">            
+            <h1 id="titulo">Cadastro</h1>
+            <h2 class="subtitulo">Informações Pessoais</h2>
+        </div>
+
+        <div class="corpo row">
+            <div class="container">
+                <p>Olá! Seja bem vindo</p>
+                <form class="" method="post" action="./recebe.php">    
+                    <div class="espaco">                                          
+                        <div class= "form-group">
+                            <label for="nome">Nome do usuário <span> * </span></label>
+                            <input type="text" class="form-control" name="nome" id="nome" placeholder="Digite o nome completo" onblur="validarnome();" required>
+                            <div id="erroNaoAtende" style="display: none;"><p class="erro">Seu nome deve ter pelo menos 3 caracteres.</p></div>
+                        </div>                                                 
+                        <div class= "form-group">
+                            <label for="email">E-mail <span> * </span></label>
+                            <input type="e-mail" class="form-control" name="email" id="email" required>
+                        </div>
+                        <div class= "form-group">
+                            <label for="senha">Senha <span> * </span></label>
+                            <input type="password" class="form-control" name="senha" id="senha" onblur="validarSenha();" required>
+                            <div id="erroSenha" style="display: none;"><p class="erro">A senha não pode começar com @</p></div>
+                        </div>
+                        <div class= "form-group">
+                            <label for="senhaConfirma">Confirmar senha <span> * </span></label>
+                            <input type="password" class="form-control" name="senhaConfirma" id="senhaConfirma" onblur="comparaSenha();">
+                            <div id="senhaDiferente" style="display: none;"><p class="erro">As senhas não coincidem.</p></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sexo">Sexo</label><br>
+                            <select class="form-control" id="sexo" name="sexo" onblur="alistamento()" required><br>
+                                <option value="">Escolha uma opção</option>
+                                <option value="Feminino">Feminino</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Prefiro não informar">Prefiro não informar</option>                              
+                            </select>
+                        </div>  
+                        <div class="form-group" id="alistamento"></div>                      
+                    </div>
+                    <hr>        
+                    <div class="botao">
+                        <input id="botao" type="submit" class="btn btn-primary" name="entrar" value="Enviar" onclick="comparaSenha();"/>
+                    </div>
+                </form>                  
+            </div>                 
+        </div>     
+    </body>
+</html> 
