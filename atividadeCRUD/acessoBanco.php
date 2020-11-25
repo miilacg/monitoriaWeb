@@ -1,7 +1,7 @@
 <?php
     $servidor = "localhost";
 	$usuario = "root";
-	$senha = "";
+	$senha = "mila";
     $dbname = "cadastro_web";	
     ini_set('default_charset', 'UTF-8'); //esta linha antes de criar a variavel conexao				
     $conn = mysqli_connect($servidor, $usuario, $senha, $dbname); //conexao com o bd
