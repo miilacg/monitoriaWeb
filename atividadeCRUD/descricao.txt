@@ -8,3 +8,8 @@ O link editar deverá enviar para uma página parecida com a de cadastro porém 
 já preenchidos e as alterações deverão ser persistidas no banco.
 O link remover deverá abrir uma janela perguntando se o usuários de fato quer remover e caso
 sim, fazer a devida remoção no banco    
+
+Para complementar o trabalho, deverá ser criada uma tela de login, onde será
+consultada na base de usuários cadastrados e, caso o login esteja correto, criar uma sessão e
+direcionar para uma página de boas-vindas. Esta página só poderá ser acessada por usuários
+logados.
