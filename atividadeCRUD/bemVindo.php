@@ -1,18 +1,100 @@
 <?php
-    session_start();
+	session_start();
+    
+    $email = $_SESSION['email'];
+    $senha = $_SESSION['senha'];
 
-    function buscaGeral(){
+    $valor = isset($_SESSION['email']) ? 's' : 'n';
+    if ($valor == 'n'){
+        header("Location: login.php");
+    } 
+
+    function busca($num){
         include 'acessoBanco.php';
+        $email = $_SESSION['email'];
+        $senha = $_SESSION['senha'];
 
-        $busca = "SELECT * FROM usuario";	          
+        $busca = "SELECT * FROM usuario where email = '$email' AND senha = '$senha'";	          
         $verifica = mysqli_query($conn, $busca);
-        if (mysqli_num_rows($verifica) >= 1){
-            return mysqli_num_rows($verifica);
+        $linha = mysqli_fetch_assoc($verifica);
+
+        if($num == 1){
+            return $linha['nome_usuario'];
         }else{
-            return 0;
+            if($num == 2){
+                return $linha['sexo'];
+            }else{
+                if($num == 3){
+                    return $linha['email'];
+                }else{
+                    if($num == 4){
+                        return $linha['id'];
+                    }else{
+                        if($num == 5){
+                            return $linha['numero_alistamento'];
+                        }
+                    }
+                }
+            }
         }
+        
     }  
 ?>
+
+
+<script>
+    function validarnome() {
+        var nome = document.getElementById("nome");
+        if(nome.value.length >= 3){
+            document.getElementById("nome").value = nome.value.toUpperCase();
+            nome.setAttribute('style', 'box-shadow: 0 0 0 0.2rem rgba(34, 177, 76,.5);');
+        }else{
+            nome.setAttribute('style', 'box-shadow: 0 0 0 0.2rem rgba(255, 0, 0,.25);');
+            document.getElementById('nome').value = "";
+            erroNaoAtende.setAttribute('style', 'display: block;');
+        }
+    }
+
+    function validarSenha() {
+        var senha = document.getElementById("senha");
+        let special = /[@]/;
+        if(special.test(senha.value[0])){
+            nome.setAttribute('style', 'box-shadow: 0 0 0 0.2rem rgba(255, 0, 0,.25);');
+            document.getElementById('senha').value = "";
+            erroSenha.setAttribute('style', 'display: block;');
+        }
+    }
+
+    /*confere se a senha inserida é igual a senha de validação*/
+    function comparaSenha(){
+        var senha = document.getElementById('senha').value;
+        var senhaConfirma = document.getElementById('senhaConfirma');   
+
+        if (senha === senhaConfirma.value){
+            senhaConfirma.setCustomValidity('');
+            senhaConfirma.setAttribute('style', 'box-shadow:focus: 0 0 0 0.2rem rgba(0,123,255,.25);');
+        }else{
+            document.getElementById('senhaConfirma').value = "";
+            senhaConfirma.setAttribute('style', 'box-shadow: 0 0 0 0.2rem rgba(255, 0, 0,.25);');
+            senhaDiferente.setAttribute('style', 'display: block;');
+        }
+    }
+
+    function alistamento(){  
+        var sexo = document.getElementById('sexo').value;
+
+        if(sexo === 'Masculino'){
+            var alistamento = document.getElementById('alistamento');
+            var inputAlistamento = document.createElement('input');
+            inputAlistamento.setAttribute('class', 'form-control'); 
+            inputAlistamento.setAttribute('type', 'number');  
+            inputAlistamento.setAttribute('id', 'numAlistamento');
+            inputAlistamento.setAttribute('name', 'numAlistamento'); 
+            inputAlistamento.setAttribute('placeholder', 'Digite o número do seu alistamento');
+            alistamento.append(inputAlistamento); 
+        }         
+    }
+</script>
 
 <!DOCTYPE HTML>
 <html lang="pt-br">
@@ -27,9 +109,9 @@
 
         <link rel="stylesheet" href="style.css">
         <link rel="shortout icon" href="../icon.png" type="image/x-png"> 
-		<title>Cadastrados</title>
+		<title>Bem vindo</title>
     </head>
-    <body>      
+    <body>     
         <!-- Modal -->
         <div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -45,11 +127,13 @@
                                 input.setAttribute('checked', 'checked');  
                                 divPai.append(input);                                 
                             }                                  
-                        </script>                        
+                        </script>                 
+
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Você tem certeza que deseja excluir o cadastro?</h5>
                         </div>
-                        <div class="opcao" style="display:none"></div>                          
+                        <div class="opcao" style="display:none"></div>   
+
                         <div class="modal-footer">                    
                             <div class="botao">
                                 <button type="button" class="btn btn-secondary" id="botao" data-dismiss="modal">Fechar</button>                           
@@ -123,10 +207,12 @@
                                 }
                             }
                         </script>
+
                         <div class="modal-header">                        
                             <h5 class="modal-title" id="exampleModalLabel">Alterar dados</h5>                    
                         </div>
-                        <div class="opcao" style="display:none"></div>                        
+                        <div class="opcao" style="display:none"></div> 
+
                         <div class="modal-body">     
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Nome do usuário:</label>
@@ -159,6 +245,7 @@
                                 <div id="senhaDiferente" style="display: none;"><p class="erro">As senhas não coincidem.</p></div>
                             </div>                          
                         </div>
+
                         <div class="modal-footer">                    
                             <div class="botao">
                                 <button type="button" class="btn btn-secondary" id="botao" data-dismiss="modal" onclick="excluir();">Fechar</button>                           
@@ -170,54 +257,33 @@
             </div>
         </div>
 
+        
         <div class="header">            
-            <h1 id="titulo">Usúarios cadastrados</h1>
+            <h1 id="titulo">Bem vindo, <?php echo busca(1);?></h1>
         </div>
 
         <div class="corpo row">
-            <?php                    
-                if(buscaGeral() >= 1){
-                    ?>
-                        <table class="table" id="table">
-                            <thead class="thead-light">
+            <div class="container">
+                <div class="corpo row">  
+                    <table class="table" id="table">
+                        <thead class="thead-light">
                             <tr>
                                 <th scope="col">NOME</th>
                                 <th scope="col"> </th>
                                 <th scope="col"> </th>
                             </tr>
-                            </thead>
-                            <tbody class="corpoTabela">
-                                <?php
-                                    include 'acessoBanco.php';
-                                    $busca = "SELECT * FROM usuario";	          
-                                    $verifica = mysqli_query($conn, $busca);
-                                    $linha = mysqli_fetch_assoc($verifica);  
-                                
-                                    do{                                                                            
-                                        ?>
-                                            <tr>                                                
-                                                <td><label type="text"><?php echo $linha['nome_usuario'];?></td>
-                                                <td><button type="button" class="btn btn-primary listar" data-toggle="modal" data-target="#modalAlterar" data-name="<?php echo $linha['nome_usuario'];?>" data-sexo="<?php echo $linha['sexo'];?>" data-email="<?php echo $linha['email'];?>" onclick="marcarAlterar('<?php echo $linha['id']; ?>', '<?php echo $linha['numero_alistamento']; ?>');">Alterar</button></td>
-                                                <td><button type="button" class="btn btn-secondary listar" data-toggle="modal" data-target="#modalExcluir" onclick="marcarExcluir('<?php echo $linha['id']; ?>');">Excluir</button></td>	                                                    
-                                            </tr>                                                    
-                                        <?php
-                                    }while($linha = mysqli_fetch_assoc($verifica));
-                                ?>                                
-                            </tbody>
-                        </table> 
-                    <?php
-                }else{
-                    echo("Ainda não existe nenhum dado cadastrado! :(");
-                }
-            ?>             
+                        </thead>
+                        <tbody class="corpoTabela">
+                            <tr>                                                
+                                <td><label type="text"><?php echo busca(1);?></td>
+                                <td><button type="button" class="btn btn-primary listar" data-toggle="modal" data-target="#modalAlterar" data-name="<?php echo busca(1);?>" data-sexo="<?php echo busca(2);?>" data-email="<?php echo busca(3);?>" onclick="marcarAlterar('<?php echo busca(4);?>', '<?php echo busca(5);?>');">Alterar</button></td>
+                                <td><button type="button" class="btn btn-secondary listar" data-toggle="modal" data-target="#modalExcluir" onclick="marcarExcluir('<?php echo busca(3);?>');">Excluir</button></td>	                                                    
+                            </tr>                  
+                        </tbody>    
+                    </table>                       
+                </div>                  
+            </div>                 
         </div> 
-
-        <?php 
-            if (isset ($_SESSION['msg'])){
-                echo $_SESSION['msg'];
-                unset ($_SESSION['msg']);
-            }
-        ?>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" ></script>
