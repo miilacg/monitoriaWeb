@@ -89,3 +89,22 @@ td label{
     padding: 2px 25px;
     font-size: 18px;
 }
+
+/*modais*/
+.modal-footer{
+    align-items: center;
+    justify-content: center;
+    display: flex;    
+    position: relative;
+}
+
+.modal-footer .botao{
+    margin: 0vw 0vw 0vw auto; 
+}
+
+.modal-footer .botao #botao{
+    border: none;
+    padding: 2.5px 35px;
+    font-size: 25px;    
+    margin: 0vw 1.9vw 0vw 1.5vw; 
+}
