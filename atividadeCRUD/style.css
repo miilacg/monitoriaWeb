@@ -68,10 +68,10 @@ hr{
     display: flex;
 }
 
-.btn {
+/*.btn {
     padding: 3px 90px;
     font-size: 30px;
-}
+}*/
 
 td label{
     padding: 8px 30px 0px 3px;
@@ -85,10 +85,10 @@ td label{
     display: flex;
 }
 
-.btn.listar{
+/*.btn.listar{
     padding: 2px 25px;
     font-size: 18px;
-}
+}*/
 
 /*modais*/
 .modal-footer{
@@ -107,4 +107,19 @@ td label{
     padding: 2.5px 35px;
     font-size: 25px;    
     margin: 0vw 1.9vw 0vw 1.5vw; 
+}
+
+
+/*pagina de boas vindas*/
+.bemVindo .col button.btn{
+    color: white;
+    font-size: 2vw;
+    text-align: center;
+    margin: 1vw;      
+    width: 25vw;
+}
+
+.bemVindo .col button.btn a{
+    color: white;   
+    font-size: 2vw;
 }

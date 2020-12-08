@@ -30,146 +30,6 @@
 		<title>Cadastrados</title>
     </head>
     <body>      
-        <!-- Modal -->
-        <div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form method="POST" action="altera.php" id="update_tracking_number_form">                
-                        <script>
-                            function marcarExcluir(id){
-                                var divPai = $('.opcao');
-                                var input = document.createElement('input');
-                                input.setAttribute('type', 'radio'); 
-                                input.setAttribute('name', 'excluir_id');                                
-                                input.setAttribute('value', id); 
-                                input.setAttribute('checked', 'checked');  
-                                divPai.append(input);                                 
-                            }                                  
-                        </script>                        
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Você tem certeza que deseja excluir o cadastro?</h5>
-                        </div>
-                        <div class="opcao" style="display:none"></div>                          
-                        <div class="modal-footer">                    
-                            <div class="botao">
-                                <button type="button" class="btn btn-secondary" id="botao" data-dismiss="modal">Fechar</button>                           
-                                <input type='submit' class="btn btn-danger" id="botao" name='excluir' value='Excluir'>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> 
-        
-        <div class="modal fade" id="modalAlterar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document" onblur="excluir();">
-                <div class="modal-content">
-                    <form method="POST" action="altera.php">
-                        <script>
-                            function marcarAlterar(id, alistamento){                                
-                                var divPai = $('.opcao');
-                                var input = document.createElement('input');
-                                input.setAttribute('type', 'radio'); 
-                                input.setAttribute('name', 'alterar_id');                                
-                                input.setAttribute('value', id); 
-                                input.setAttribute('checked', 'checked');  
-                                divPai.append(input); 
-                                
-                                numero = Number(Object(alistamento));
-
-                                if (alistamento != null && alistamento != 0){
-                                    var alistamento = document.getElementById('alistamento');
-                                    var inputAlistamento = document.createElement('input');
-                                    alistamento.setAttribute('style', 'display: block');
-                                    inputAlistamento.setAttribute('class', 'form-control alistamento'); 
-                                    inputAlistamento.setAttribute('type', 'number');  
-                                    inputAlistamento.setAttribute('id', 'numAlistamento');
-                                    inputAlistamento.setAttribute('name', 'numAlistamento');     
-                                    inputAlistamento.setAttribute('value', numero);   
-                                    alistamento.append(inputAlistamento); 
-                                }
-                            }     
-                            
-                            function excluir(){
-                                var alistamento = document.getElementById('alistamento');
-                                alistamento.setAttribute('style', 'display: none');
-                                
-                                document.getElementById('numAlistamento').remove()
-                            }
-                            
-                            function validarSenha() {
-                                var senha = document.getElementById("senha");
-                                let special = /[@]/;
-                                if(special.test(senha.value[0])){
-                                    nome.setAttribute('style', 'box-shadow: 0 0 0 0.2rem rgba(255, 0, 0,.25);');
-                                    document.getElementById('senha').value = "";
-                                    erroSenha.setAttribute('style', 'display: block;');
-                                }
-                            }
-
-                            /*confere se a senha inserida é igual a senha de validação*/
-                            function comparaSenha(){
-                                var senha = document.getElementById('senha').value;
-                                var senhaConfirma = document.getElementById('senhaConfirma');   
-
-                                if (senha === senhaConfirma.value){
-                                    senhaConfirma.setCustomValidity('');
-                                    senhaConfirma.setAttribute('style', 'box-shadow:focus: 0 0 0 0.2rem rgba(0,123,255,.25);');
-                                    senhaDiferente.setAttribute('style', 'display: none;');
-                                }else{
-                                    document.getElementById('senhaConfirma').value = "";
-                                    senhaConfirma.setAttribute('style', 'box-shadow: 0 0 0 0.2rem rgba(255, 0, 0,.25);');
-                                    senhaDiferente.setAttribute('style', 'display: block;');
-                                }
-                            }
-                        </script>
-                        <div class="modal-header">                        
-                            <h5 class="modal-title" id="exampleModalLabel">Alterar dados</h5>                    
-                        </div>
-                        <div class="opcao" style="display:none"></div>                        
-                        <div class="modal-body">     
-                            <div class="form-group">
-                                <label for="name" class="col-form-label">Nome do usuário:</label>
-                                <input type="text" class="form-control name" id="name" name="nome" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="col-form-label">E-mail:</label>
-                                <input type="e-mail" class="form-control email" id="email" name="email" required>
-                            </div>   
-                            <div class="form-group">
-                                <label for="sexo">Sexo</label><br>
-                                <select class="form-control sexo" id="sexo" name="sexo" required><br>
-                                    <option value="">Escolha uma opção</option>
-                                    <option value="Feminino">Feminino</option>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Prefiro não informar">Prefiro não informar</option>                              
-                                </select>
-                            </div> 
-                            <div class="form-group" id="alistamento" style="display:none">
-                                <label for="alistamento" class="col-form-label">Número do alistamento:</label>
-                            </div> 
-                            <div class= "form-group">
-                                <label for="senha">Senha <span> * </span></label>
-                                <input type="password" class="form-control" name="senha" id="senha" onblur="validarSenha();" required>
-                                <div id="erroSenha" style="display: none;"><p class="erro">A senha não pode começar com @</p></div>
-                            </div>
-                            <div class= "form-group">
-                                <label for="senhaConfirma">Confirmar senha <span> * </span></label>
-                                <input type="password" class="form-control" name="senhaConfirma" id="senhaConfirma" onblur="comparaSenha();">
-                                <div id="senhaDiferente" style="display: none;"><p class="erro">As senhas não coincidem.</p></div>
-                            </div>                          
-                        </div>
-                        <div class="modal-footer">                    
-                            <div class="botao">
-                                <button type="button" class="btn btn-secondary" id="botao" data-dismiss="modal" onclick="excluir();">Fechar</button>                           
-                                <input type="submit" class="btn btn-primary" id="botao" name="entrar" value="Alterar"/>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
         <div class="header">            
             <h1 id="titulo">Usúarios cadastrados</h1>
         </div>
@@ -182,8 +42,7 @@
                             <thead class="thead-light">
                             <tr>
                                 <th scope="col">NOME</th>
-                                <th scope="col"> </th>
-                                <th scope="col"> </th>
+                                <th scope="col">E-MAIL</th>
                             </tr>
                             </thead>
                             <tbody class="corpoTabela">
@@ -197,8 +56,7 @@
                                         ?>
                                             <tr>                                                
                                                 <td><label type="text"><?php echo $linha['nome_usuario'];?></td>
-                                                <td><button type="button" class="btn btn-primary listar" data-toggle="modal" data-target="#modalAlterar" data-name="<?php echo $linha['nome_usuario'];?>" data-sexo="<?php echo $linha['sexo'];?>" data-email="<?php echo $linha['email'];?>" onclick="marcarAlterar('<?php echo $linha['id']; ?>', '<?php echo $linha['numero_alistamento']; ?>');">Alterar</button></td>
-                                                <td><button type="button" class="btn btn-secondary listar" data-toggle="modal" data-target="#modalExcluir" onclick="marcarExcluir('<?php echo $linha['id']; ?>');">Excluir</button></td>	                                                    
+                                                <td><label type="text"><?php echo $linha['email'];?></td>
                                             </tr>                                                    
                                         <?php
                                     }while($linha = mysqli_fetch_assoc($verifica));

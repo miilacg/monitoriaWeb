@@ -17,9 +17,15 @@
         $busca = "SELECT * FROM usuario where email = '$email' AND senha = '$senha'";	          
         $verifica = mysqli_query($conn, $busca);
         $linha = mysqli_fetch_assoc($verifica);
+        $nome = $linha['nome_usuario'];
 
         if($num == 1){
-            return $linha['nome_usuario'];
+            $tamanho = strlen(strstr($nome, ' ', true)); 
+            if($tamanho > 0){
+                return strstr($nome, ' ', true);
+            }else{
+                return $nome;
+            }  
         }else{
             if($num == 2){
                 return $linha['sexo'];
@@ -40,7 +46,6 @@
         
     }  
 ?>
-
 
 <script>
     function validarnome() {
@@ -112,7 +117,7 @@
 		<title>Bem vindo</title>
     </head>
     <body>     
-        <!-- Modal -->
+        <!-- Modais -->
         <div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -241,7 +246,7 @@
                             </div>
                             <div class= "form-group">
                                 <label for="senhaConfirma">Confirmar senha <span> * </span></label>
-                                <input type="password" class="form-control" name="senhaConfirma" id="senhaConfirma" onblur="comparaSenha();">
+                                <input type="password" class="form-control" name="senhaConfirma" id="senhaConfirma" onblur="comparaSenha();" required>
                                 <div id="senhaDiferente" style="display: none;"><p class="erro">As senhas não coincidem.</p></div>
                             </div>                          
                         </div>
@@ -257,33 +262,50 @@
             </div>
         </div>
 
-        
+
+        <!-- header -->        
         <div class="header">            
             <h1 id="titulo">Bem vindo, <?php echo busca(1);?></h1>
+            <h2 class="subtitulo">O que você deseja?</h2>
         </div>
 
-        <div class="corpo row">
-            <div class="container">
-                <div class="corpo row">  
-                    <table class="table" id="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">NOME</th>
-                                <th scope="col"> </th>
-                                <th scope="col"> </th>
-                            </tr>
-                        </thead>
-                        <tbody class="corpoTabela">
-                            <tr>                                                
-                                <td><label type="text"><?php echo busca(1);?></td>
-                                <td><button type="button" class="btn btn-primary listar" data-toggle="modal" data-target="#modalAlterar" data-name="<?php echo busca(1);?>" data-sexo="<?php echo busca(2);?>" data-email="<?php echo busca(3);?>" onclick="marcarAlterar('<?php echo busca(4);?>', '<?php echo busca(5);?>');">Alterar</button></td>
-                                <td><button type="button" class="btn btn-secondary listar" data-toggle="modal" data-target="#modalExcluir" onclick="marcarExcluir('<?php echo busca(3);?>');">Excluir</button></td>	                                                    
-                            </tr>                  
-                        </tbody>    
-                    </table>                       
-                </div>                  
-            </div>                 
+        <div class="corpo row bemVindo">    
+            <div class="col">
+                <button type="button" class="btn btn-info listar" data-toggle="modal" data-target="#modalAlterar" data-name="<?php echo busca(1);?>" data-sexo="<?php echo busca(2);?>" data-email="<?php echo busca(3);?>" onclick="marcarAlterar('<?php echo busca(4);?>', '<?php echo busca(5);?>');">Alterar dados</button>                           
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-info listar" data-toggle="modal" data-target="#modalExcluir" onclick="marcarExcluir('<?php echo busca(4);?>');">Excluir</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-info">
+                    <a href="listar.php">Ver outros usuários</a>
+                </button>
+            </div>
+                    
+            <!--<table class="table" id="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">NOME</th>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                    </tr>
+                </thead>
+                <tbody class="corpoTabela">
+                    <tr>                                                
+                        <td><label type="text"><?php echo busca(1);?></td>
+                        <td><button type="button" class="btn btn-primary listar" data-toggle="modal" data-target="#modalAlterar" data-name="<?php echo busca(1);?>" data-sexo="<?php echo busca(2);?>" data-email="<?php echo busca(3);?>" onclick="marcarAlterar('<?php echo busca(4);?>', '<?php echo busca(5);?>');">Alterar</button></td>
+                        <td><button type="button" class="btn btn-secondary listar" data-toggle="modal" data-target="#modalExcluir" onclick="marcarExcluir('<?php echo busca(3);?>');">Excluir</button></td>	                                                    
+                    </tr>                  
+                </tbody>    
+            </table>-->                               
         </div> 
+
+        <?php 
+            if (isset ($_SESSION['msg'])){
+                echo $_SESSION['msg'];
+                unset ($_SESSION['msg']);
+            }
+        ?>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" ></script>

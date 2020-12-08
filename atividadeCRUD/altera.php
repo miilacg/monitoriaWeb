@@ -10,8 +10,8 @@
     if ($excluir != null && $excluir != 0){
         $delete = "DELETE FROM usuario WHERE id = '$excluir';";
         $d = mysqli_query($conn, $delete);
-        $_SESSION['msg'] = "<div class='alert alert-success' role='alert'> As informações foram inseridas com sucesso </div>";
-        header ("Location: listar.php");
+        $_SESSION['msg'] = "<div class='alert alert-danger' role='alert'> As informações foram excluidas com sucesso </div>";
+        header ("Location: login.php");
     }else{
         if ($alterar != null && $alterar != 0){
             $nome = filter_input (INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
@@ -28,7 +28,7 @@
             }
             $u = mysqli_query($conn, $update);
             $_SESSION['msg'] = "<div class='alert alert-success' role='alert'> As informações foram alteradas com sucesso </div>";
-            header ("Location: listar.php");
+            header ("Location: bemvindo.php");
         }
     }
     
