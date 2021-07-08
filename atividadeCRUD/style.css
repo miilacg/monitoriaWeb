@@ -78,18 +78,6 @@ td label{
     margin: auto 0px;
 }
 
-.botao.listar{
-    margin: 0px auto 0px auto;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-}
-
-/*.btn.listar{
-    padding: 2px 25px;
-    font-size: 18px;
-}*/
-
 /*modais*/
 .modal-footer{
     align-items: center;
